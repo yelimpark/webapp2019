@@ -2,7 +2,7 @@
     session_start();
 
     try {
-        $db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "1111");
+        $db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "11111111");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->query("set session character_set_connection=utf8;");
         $db->query("set session character_set_results=utf8;");
@@ -15,15 +15,22 @@
         $q_receiver = $db->quote($receiver);
         $q_day = $db->quote($day);
 
+        $teams = "SELECT * FROM member WHERE studentNum = $mynum";
+        $rows = $db->query($teams);
+        $results = $rows->fetchAll();
+        $teamname = $results[0]["teamname"];
+        $q_teamname = $db->quote($teamname);
+
         echo "<pre>";
         var_dump($q_mynum);
         var_dump($q_receiver);
         var_dump($q_day);
+        var_dump($q_teamname);
         echo "</pre>";
 
         $db->exec("DELETE FROM message
                     WHERE
-                    sender = $q_mynum and
+                    sender = $q_teamname and
                     receiver = $q_receiver and
                     sendDay = $q_day");
 

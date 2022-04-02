@@ -163,7 +163,7 @@ session_start();
 						<?php
 
 						try {
-							$db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "1111");
+							$db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "11111111");
 							$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 							$db->query("set session character_set_connection=utf8;");
 							$db->query("set session character_set_results=utf8;");
@@ -197,50 +197,25 @@ session_start();
 											<input type="text" name="exname" value="<?=$teamname?>" style="display:none;">
 											<div class="mteamname"><span>팀명: </span><input type="text" name="teamname" value="<?=$teamname?>"></div>
 											<div class="git"><span>Github: </span><input type="text" name="github" value="<?=$team['github']?>"></div>
-											<ul>
-												<?php
-												$check = "SELECT * FROM member WHERE teamname=$q_teamname";
-												$rows = $db->query($check);
-												$members = $rows->fetchAll();
-												foreach($members as $member) {
-													?>
-													<li><?=$member['studentNum']?> <?=$member['name']?></li>
-													<?php
-												}
-												?>
-											</ul>
-											<div class="center"><input type="submit" value="수정하기"></div>
+											<div class="right"><input id = "editButton" type="submit" value="수정하기"></div>
 										</form>
-						<?php
-									} else {
-                                        $teamname = $result["teamname"];
-                                        $q_teamname = $db->quote($teamname);
-                                        $check = "SELECT * FROM team WHERE name=$q_teamname";
-                                        $rows = $db->query($check);
-                                        $teams = $rows->fetchAll();
-                                        foreach($teams as $team) {
-						?>
-                                            <form action="php/updateteam.php" method="POST">
-                                                <input type="text" name="exname" value="<?=$teamname?>" style="display:none;">
-                                                <div class="mteamname"><span>팀명: </span><input type="text" name="teamname" value="<?=$teamname?>"></div>
-                                                <div class="git"><span>Github: </span><input type="text" name="github" value="<?=$team['github']?>"></div>
-																								<div class="center"><input type="submit" value="수정하기"></div>
-																						</form>
-                                            <ul>
-                        <?php
-                                                $check = "SELECT * FROM member WHERE teamname=$q_teamname";
-                                                $rows = $db->query($check);
-                                                $members = $rows->fetchAll();
-                                                foreach($members as $member) {
-                        ?>
-                                                    <li><?=$member['studentNum']?> <?=$member['name']?></li>
-                        <?php
-                                                }
-                        ?>
-                                            </ul>
-																						<a href="php/out.php"> <button>탈퇴</button> </a>
-                        <?php
-                                        }
+										<ul>
+											<?php
+											$check = "SELECT * FROM member WHERE teamname=$q_teamname";
+											$rows = $db->query($check);
+											$members = $rows->fetchAll();
+											foreach($members as $member) {
+												?>
+												<li><?=$member['name']?> (<?=$member['studentNum']?>)</li>
+												<?php
+											}
+											?>
+										</ul>
+										<div class="center">
+											<a href="php/out.php"> <button class="secession">탈퇴</button> </a>
+										</div>
+										<?php
+
 									}
 								}
 							}

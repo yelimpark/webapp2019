@@ -2,7 +2,7 @@
     $dbHost = "54.180.112.225";
     $dbName = "team";
     $dbUser = "root";
-    $dbPass = "1111";
+    $dbPass = "11111111";
 
     $db = new PDO("mysql:host={$dbHost};dbname={$dbName};port=3306", $dbUser, $dbPass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -10,7 +10,7 @@
     $db->query("set session character_set_results=utf8;");
     $db->query("set session character_set_client=utf8;");
 
-    $langList = array("html","css","js","jquery","php","db","ajax","xml","c","c++","java","python","ruby","Django","Perl");
+    $langList = array("html","css","js","jquery","php","db","ajax","xml","c","cplusplus","java","python","ruby","Django","Perl");
     $str = "select * from lang as l join member as m on l.studentNum = m.studentNum";
 
 function recommend($m_kind,$class) {

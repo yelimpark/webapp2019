@@ -2,7 +2,7 @@
     session_start();
 
     try {
-        $db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "1111");
+        $db = new PDO("mysql:dbname=team; host=54.180.112.225; port=3306", "root", "11111111");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->query("set session character_set_connection=utf8;");
         $db->query("set session character_set_results=utf8;");
@@ -21,15 +21,8 @@
         var_dump($q_day);
         echo "</pre>";
 
-        #sender 의 teamname
-        $check = "SELECT * FROM member WHERE studentNum = $q_sender";
-        $rows = $db->query($check);
-        $results = $rows->fetchAll();
-        $teamname = $results[0]["teamname"];
-        $q_teamname = $db->quote($teamname);
-
         echo "<pre>";
-        var_dump($q_teamname);
+        var_dump($q_sender);
         echo "</pre>";
 
         #나의 teamname
@@ -48,17 +41,17 @@
             $results = $rows->fetchAll();
             if (count($results) == 1) {
                 $db->exec("DELETE FROM team
-                        WHERE 
+                        WHERE
                         teamname = $q_myteam");
             }
         }
 
         $db->exec("UPDATE member SET
-                    teamname=$q_teamname
+                    teamname=$q_sender
                     WHERE studentNum = $q_mynum");
 
         $db->exec("DELETE FROM message
-                    WHERE 
+                    WHERE
                     sender = $q_sender and
                     receiver = $q_mynum and
                     sendDay = $q_day");
